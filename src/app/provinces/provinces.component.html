@@ -1,0 +1,168 @@
+<section>
+  <!--for demo wrap-->
+  <h1>Quản Lý Tỉnh Thành</h1>
+  <div class="input-group mb-3">
+    <input id="search" type="text" class="form-control" placeholder="Tìm kiếm sản phẩm"
+           aria-label="Recipient's username" aria-describedby="button-addon2">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Tìm kiếm
+    </button>
+  </div>
+  <button (click)="displayProvinces()" class="btn btn-primary">
+    Tất cả tỉnh thành
+  </button>
+  <button (click)="displayFormCreate()" style="margin-left: 2px " type="button" class="btn btn-primary">
+    Tạo mới tỉnh thành
+  </button>
+  <br>
+  <div id="get_by_brands">
+
+  </div>
+
+
+  <div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <thead>
+      <tr>
+        <th>STT</th>
+        <th>Tên</th>
+        <th>Diện tích</th>
+        <th>Dân số</th>
+        <th>GDP</th>
+        <th>Miêu tả</th>
+        <th>Quốc Gia</th>
+        <th style="text-align: center">Hành động</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+  <div id="list-provinces" class="tbl-content">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tbody>
+      <tr *ngFor="let p of provinces, index as i">
+        <td>{{i + 1}}</td>
+        <td>{{p.name}}</td>
+        <td>{{p.area}}</td>
+        <td>{{p.population}}</td>
+        <td>{{p.gdp}}</td>
+        <td>{{p.description}}</td>
+        <td>{{p?.country?.name}}</td>
+        <td>
+          <button class="btn btn-danger">Xem</button>
+          <button style="margin: 1px" class="btn btn-danger" (click)="updateForm(p.id)">Sửa</button>
+          <button class="btn btn-danger" (click)="deleteProvince(p.id)">Xóa</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- The Modal Create And Update -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 id="titleFrom" class="modal-title"></h4>
+        <button type="button" class="btn-close" (click)="closeFromCreate()"></button>
+      </div>
+
+      <!-- Modal body -->
+      <form [formGroup]="provinceForm" enctype="multipart/form-data">
+        <table class="modal-body">
+          <tr>
+            <td>
+              <input id="name" formControlName="name" type="text">
+              Tên
+            </td>
+
+          </tr>
+          <tr>
+            <td>
+              <input id="area" formControlName="area" type="text">
+              Diện tích
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input id="population" formControlName="population" type="text">
+              Dân số
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input id="gdp" formControlName="gdp" type="text">
+              Gdp
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <textarea id="description" formControlName="description"></textarea>
+              Miêu tả
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <select name="" id="countries">
+                <option *ngFor="let c of countries" value="{{c.id}}">
+                  {{c.name}}
+                </option>
+              </select>
+              Quốc gia
+            </td>
+          </tr>
+          <tr>
+            <td id="messageCreate">
+            </td>
+          </tr>
+        </table>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button (click)="createProvince()" hidden id="buttonCreate" class="btn btn-danger">Tạo mới thành phố</button>
+          <button type="reset" hidden id="rest" class="btn btn-danger">Tạo mới thành phố</button>
+          <button (click)="updateProvince()" hidden id="buttonUpdate" class="btn btn-danger">Chỉnh sửa thành phố</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Modal Create And Update -->
+<!--Detail-->
+<div class="modal" id="detailModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 id="titleFromDetail" class="modal-title">Thông tin thành phố</h4>
+        <button (click)="closeFromCreate()" type="button" class="btn-close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="">
+          <div style="font-size: 20px" id="nameDetail">
+
+          </div>
+          <div style="font-size: 20px" id="areaDetail">
+
+          </div>
+          <div style="font-size: 20px" id="populationDetail">
+
+          </div>
+          <div style="font-size: 20px" id="gdpDetail">
+
+          </div>
+          <div style="font-size: 20px" id="descriptionDetail">
+
+          </div>
+          <div style="font-size: 20px" id="countryDetail">
+
+          </div>
+        </form>
+
+      </div>
+      <!-- Modal body -->
+    </div>
+  </div>
+</div>
+<!--End detail-->
